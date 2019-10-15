@@ -28,10 +28,10 @@ void setup() {
   Serial.begin(9600);
   SPI.begin();
 
+  delay(2);
+    
   pinMode(CS, OUTPUT);
   pinMode(DRDY, INPUT);
-
-  delay(50); //(?)
 
   begin_transaction();
   reset();
