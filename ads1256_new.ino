@@ -160,6 +160,8 @@ long read_input_e() {
     adc_val |= SPI.transfer(0);
     adc_val <<= 4;
     adc_val |= SPI.transfer(0);
+    
+    delayMicroseconds(get_delay(4, 2));
 
     //The ADS1255/6 output 24 bits of data in Binary Two's
     //Complement format. The LSB has a weight of
