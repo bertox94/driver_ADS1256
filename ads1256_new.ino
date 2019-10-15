@@ -6,8 +6,8 @@
 #define SPI_Hz 1250000
 #define XTAL_Hz 7680000
 
-#define SPI_tau 801L
-#define XTAL_tau 131L
+#define SPI_ns 801L
+#define XTAL_ns 131L
 
 /*
  * Arduino UNO rev3
