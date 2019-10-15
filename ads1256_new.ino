@@ -251,6 +251,6 @@ void test() {
 unsigned int get_delay(long xtal_mul, long spi_mul) {
 
     long delay_time = (xtal_mul * XTAL_tau + spi_mul * SPI_tau) / 1000L;
-    delay_time++;
+    delay_time+=2;
     return delay_time;
 }
