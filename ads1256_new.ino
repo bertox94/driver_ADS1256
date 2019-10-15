@@ -106,7 +106,6 @@ long read_input_e(){
 
   SPI.transfer(first_cmd);
   
-  //XTAL_tau*50+2*SPI_tau 9
   delayMicroseconds(get_delay(50,2));
 
   adc_val=SPI.transfer(0);
@@ -133,7 +132,6 @@ void sync(){
   byte first_cmd = 0xFC;
   SPI.transfer(first_cmd);
 
-  //XTAL_tau*24+2*SPI_tau 5
   delayMicroseconds(get_delay(24,2));
 }
 
@@ -164,7 +162,6 @@ void write_registers(byte start, byte how_many, byte in[]){
   for(int i = 0; i<how_many; i++)
     SPI.transfer(in[i]);
 
-    //XTAL_tau*4+2*SPI_tau 2
   delayMicroseconds(get_delay(4,2));
 }
 
@@ -183,7 +180,6 @@ void read_registers(byte start, byte how_many, byte out[]){
   for(int i =0; i<how_many; i++)
     out[i] = SPI.transfer(0);
 
-  //XTAL_tau*4+2*SPI_tau 2
   delayMicroseconds(get_delay(4,2));
 }
 
@@ -194,7 +190,6 @@ void begin_transaction(){
 
 void end_transaction(){
   SPI.endTransaction();
-  //XTAL_tau*8+2*SPI_tau 2
   delayMicroseconds(get_delay(8,2));
   digitalWrite(CS,LOW);
 }
