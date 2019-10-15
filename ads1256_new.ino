@@ -6,10 +6,12 @@
 #define SPI_Hz    1250000
 #define XTAL_Hz   7680000
 
-#define SPI_tau   801
-#define XTAL_tau  131
+#define SPI_tau   801L
+#define XTAL_tau  131L
 
 /*
+ * Arduino UNO rev3
+ * 
  * pin config...
  * XTAL frequency
  * CLK  - pin 13
@@ -29,7 +31,7 @@ void setup() {
   pinMode(CS, OUTPUT);
   pinMode(DRDY, INPUT);
 
-  delay(50);
+  delay(50); //(?)
 
   begin_transaction();
   reset();
@@ -104,8 +106,8 @@ long read_input_e(){
 
   SPI.transfer(first_cmd);
   
-  //XTAL_tau*50+2*SPI_tau
-  delayMicroseconds(9);
+  //XTAL_tau*50+2*SPI_tau 9
+  delayMicroseconds(get_delay(50,2));
 
   adc_val=SPI.transfer(0);
   adc_val<<=8;
@@ -131,8 +133,8 @@ void sync(){
   byte first_cmd = 0xFC;
   SPI.transfer(first_cmd);
 
-  //XTAL_tau*24+2*SPI_tau
-  delayMicroseconds(5);
+  //XTAL_tau*24+2*SPI_tau 5
+  delayMicroseconds(get_delay(24,2));
 }
 
 void wakeup(){
@@ -162,8 +164,8 @@ void write_registers(byte start, byte how_many, byte in[]){
   for(int i = 0; i<how_many; i++)
     SPI.transfer(in[i]);
 
-    //XTAL_tau*4+2*SPI_tau
-  delayMicroseconds(2);
+    //XTAL_tau*4+2*SPI_tau 2
+  delayMicroseconds(get_delay(4,2));
 }
 
 void read_registers(byte start, byte how_many, byte out[]){
@@ -175,14 +177,14 @@ void read_registers(byte start, byte how_many, byte out[]){
   SPI.transfer(first_cmd);
   SPI.transfer(second_cmd);
 
-  //XTAL_tau*50+2*SPI_tau
-  delayMicroseconds(9);
+  //XTAL_tau*50+2*SPI_tau 9
+  delayMicroseconds(get_delay(50,2));
 
   for(int i =0; i<how_many; i++)
     out[i] = SPI.transfer(0);
 
-  //XTAL_tau*4+2*SPI_tau
-  delayMicroseconds(2);
+  //XTAL_tau*4+2*SPI_tau 2
+  delayMicroseconds(get_delay(4,2));
 }
 
 void begin_transaction(){
@@ -192,12 +194,20 @@ void begin_transaction(){
 
 void end_transaction(){
   SPI.endTransaction();
-  //XTAL_tau*8+2*SPI_tau
-  delayMicroseconds(2);
+  //XTAL_tau*8+2*SPI_tau 2
+  delayMicroseconds(get_delay(8,2));
   digitalWrite(CS,LOW);
 }
 
 void test(){
   
   
+}
+
+// make sure that delay_time before return is less than or equal to 65535
+unsigned int get_delay(long xtal_mul, long spi_mul){
+
+  long delay_time = (xtal_mul*XTAL_tau + spi_mul*SPI_tau)/1000L;
+  delay_time ++;
+  return delay_time;
 }
