@@ -1,6 +1,6 @@
 void setup() {
     Serial.begin(9600);
-    initialize();
+    initialize("1000","1");
 }
 
 void loop() {
@@ -162,7 +162,10 @@ void test_sequence_e(long i){
     };
     
     long out[3];
+
+    begin_transaction();
     read_sequence(in, out,3);
+    end_transaction();
 
   //long alphadiff = readADSDiff(0, 1);
 
