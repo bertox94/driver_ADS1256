@@ -156,7 +156,7 @@ long read_input_e() {
     adc_val = SPI.transfer(0);
     adc_val <<= 8;
     adc_val |= SPI.transfer(0);
-    adc_val <<= 4;
+    adc_val <<= 8;
     adc_val |= SPI.transfer(0);
     
     delayMicroseconds(get_delay(4, 2));
