@@ -22,7 +22,7 @@
  *  
  */
 
-void initialize() {
+void initialize(char* drate, char* gain) {
     SPI.begin();
     delay(2);
 
@@ -35,21 +35,72 @@ void initialize() {
     byte in[1];
     byte out[1];
     
-    // drate 2.5    03
-    // drate 1000   A1
-    // drate 30000  F0
-    in[0] = 0xA1;
+    in[0] = drate_to_byte(drate);
     write_registers(0x03, 0x01, in);
 
-    // gain 1 00100000 0x20
-    // gain 4 00100010 0x22
-    in[0] = 0x20;
+    in[0] = gain_to_byte(gain);
     write_registers(0x02, 0x01, in);
 
     selfcal();
 
     end_transaction();
 
+}
+
+byte gain_to_byte(char* string){
+  if(strcmp(string,"1")==0){
+    return 0x20;
+  } else if (strcmp(string,"2")==0){
+    return 0x21;
+  } else if (strcmp(string,"4")==0){
+    return 0x22;
+  } else if (strcmp(string,"8")==0){
+    return 0x23;
+  } else if (strcmp(string,"16")==0){
+    return 0x24;
+  } else if (strcmp(string,"32")==0){
+    return 0x25;
+  } else if (strcmp(string,"64")==0){
+    return 0x26;
+  } else if (strcmp(string,"64")==0){
+    return 0x27;
+  }
+}
+
+byte drate_to_byte(char* string){
+    if(strcmp(string,"30000")==0){
+    return 0xF0;
+  } else if (strcmp(string,"15000")==0){
+    return 0xE0;
+  } else if (strcmp(string,"7500")==0){
+    return 0xD0;
+  } else if (strcmp(string,"3750")==0){
+    return 0xC0;
+  } else if (strcmp(string,"2000")==0){
+    return 0xB0;
+  } else if (strcmp(string,"1000")==0){
+    return 0xA1;
+  } else if (strcmp(string,"500")==0){
+    return 0x92;
+  } else if (strcmp(string,"100")==0){
+    return 0x82;
+  } else if (strcmp(string,"60")==0){
+    return 0x72;
+  } else if (strcmp(string,"50")==0){
+    return 0x63;
+  } else if (strcmp(string,"30")==0){
+    return 0x53;
+  } else if (strcmp(string,"25")==0){
+    return 0x43;
+  } else if (strcmp(string,"15")==0){
+    return 0x33;
+  } else if (strcmp(string,"10")==0){
+    return 0x23;
+  } else if (strcmp(string,"5")==0){
+    return 0x13;
+  } else if (strcmp(string,"2.5")==0){
+    return 0x03;
+  }
 }
 
 long read_input(byte negative, byte positive) {
