@@ -83,9 +83,7 @@ void loop() {
         0x03
     };
     long out[2];
-
     read_sequence(in, out);
-
     Serial.print(out[0]);
     Serial.print("\t");
     Serial.print(out[1]);
@@ -250,7 +248,7 @@ void test() {
 // make sure that delay_time before return is less than or equal to 65535
 unsigned int get_delay(long xtal_mul, long spi_mul) {
 
-    long delay_time = (xtal_mul * XTAL_tau + spi_mul * SPI_tau) / 1000L;
+    long delay_time = (xtal_mul * XTAL_ns + spi_mul * SPI_ns) / 1000L;
     delay_time+=2;
     return delay_time;
 }
