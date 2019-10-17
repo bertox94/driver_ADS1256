@@ -23,6 +23,10 @@
  */
 
 void initialize(char* drate, char* gain) {
+
+    //from power-off, standby
+    delay(100);
+  
     SPI.begin();
     delay(2);
 
