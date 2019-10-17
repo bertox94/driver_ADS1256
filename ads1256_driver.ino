@@ -3,18 +3,16 @@
 #define DRDY 9
 #define CS 10
 
-#define SPI_Hz 1250000
-#define XTAL_Hz 7680000
+#define SPI_Hz  1250000L
+#define XTAL_Hz 7680000L
 
-#define SPI_ns 801L
-#define XTAL_ns 131L
+const long SPI_ns =  1000000000L/SPI_Hz+1;
+const long XTAL_ns = 1000000000L/XTAL_Hz+1;
 
 /*
  * Arduino UNO rev3
  * 
- * pin config...
- * XTAL frequency
- * CLK  - pin 13
+ *  CLK  - pin 13
  *  DIN  - pin 11 (MOSI)
  *  DOUT - pin 12 (MISO)
  *  CS   - pin 10
@@ -24,7 +22,7 @@
 
 void initialize(char* drate, char* gain) {
 
-    //from power-off, standby
+    //POWER-OFF to POWER-ON of the ADC
     delay(100);
   
     SPI.begin();
