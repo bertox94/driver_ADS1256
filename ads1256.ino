@@ -5,9 +5,9 @@ void setup() {
 
 void loop() {
 
-    begin_transaction();
+    //begin_transaction();
     test();
-    end_transaction();
+    //end_transaction();
 }
 
 long maximum(long n1, long n2){
@@ -26,7 +26,7 @@ long minimum(long n1, long n2){
 void test(){
   
   static long i =0;
-  long test_size = 100000L;
+  long test_size = 1000000L;
 
   if(i == test_size){
     Serial.println();
