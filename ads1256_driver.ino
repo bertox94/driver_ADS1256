@@ -23,7 +23,7 @@ const long XTAL_ns = 1000000000L/XTAL_Hz+1;
 void initialize(char* drate, char* gain) {
 
     //POWER-OFF to POWER-ON of the ADC
-    delay(100);
+    delay(2000);
   
     SPI.begin();
     delay(2);
